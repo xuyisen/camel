@@ -13,7 +13,7 @@
 # ========= Copyright 2023-2024 @ CAMEL-AI.org. All Rights Reserved. =========
 
 import os
-from typing import Any, Optional
+from typing import Any
 
 from camel.models.base_audio_model import BaseAudioModel
 
@@ -25,8 +25,8 @@ class FishAudioModel(BaseAudioModel):
 
     def __init__(
         self,
-        api_key: Optional[str] = None,
-        url: Optional[str] = None,
+        api_key: str | None = None,
+        url: str | None = None,
     ) -> None:
         r"""Initialize an instance of FishAudioModel.
 
@@ -41,6 +41,10 @@ class FishAudioModel(BaseAudioModel):
 
         super().__init__(api_key, url)
         self._api_key = api_key or os.environ.get("FISHAUDIO_API_KEY")
+        if self._api_key is None:
+            raise ValueError(
+                "FishAudio API key not provided. Use `api_key` or env var."
+            )
         self._url = url or os.environ.get(
             "FISHAUDIO_API_BASE_URL", "https://api.fish.audio"
         )
@@ -50,10 +54,10 @@ class FishAudioModel(BaseAudioModel):
         self,
         input: str,
         *,
-        storage_path: Optional[str] = None,
-        reference_id: Optional[str] = None,
-        reference_audio: Optional[str] = None,
-        reference_audio_text: Optional[str] = None,
+        storage_path: str | None = None,
+        reference_id: str | None = None,
+        reference_audio: str | None = None,
+        reference_audio_text: str | None = None,
         **kwargs: Any,
     ) -> Any:
         r"""Convert text to speech and save the output to a file.
@@ -87,10 +91,13 @@ class FishAudioModel(BaseAudioModel):
 
         if not reference_audio:
             with open(f"{storage_path}", "wb") as f:
-                for chunk in self.session.tts(
-                    TTSRequest(reference_id=reference_id, text=input, **kwargs)
-                ):
-                    f.write(chunk)
+                f.writelines(
+                    self.session.tts(
+                        TTSRequest(
+                            reference_id=reference_id, text=input, **kwargs
+                        )
+                    )
+                )
         else:
             if not os.path.exists(reference_audio):
                 raise FileNotFoundError(
@@ -100,25 +107,26 @@ class FishAudioModel(BaseAudioModel):
                 raise ValueError("reference_audio_text should be provided")
             with open(f"{reference_audio}", "rb") as audio_file:
                 with open(f"{storage_path}", "wb") as f:
-                    for chunk in self.session.tts(
-                        TTSRequest(
-                            text=input,
-                            references=[
-                                ReferenceAudio(
-                                    audio=audio_file.read(),
-                                    text=reference_audio_text,
-                                )
-                            ],
-                            **kwargs,
+                    f.writelines(
+                        self.session.tts(
+                            TTSRequest(
+                                text=input,
+                                references=[
+                                    ReferenceAudio(
+                                        audio=audio_file.read(),
+                                        text=reference_audio_text,
+                                    )
+                                ],
+                                **kwargs,
+                            )
                         )
-                    ):
-                        f.write(chunk)
+                    )
 
     def speech_to_text(
         self,
         audio_file_path: str,
-        language: Optional[str] = None,
-        ignore_timestamps: Optional[bool] = None,
+        language: str | None = None,
+        ignore_timestamps: bool | None = None,
         **kwargs: Any,
     ) -> str:
         r"""Convert speech to text from an audio file.
