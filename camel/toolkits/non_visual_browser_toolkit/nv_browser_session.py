@@ -23,7 +23,7 @@ from .actions import ActionExecutor
 from .snapshot import PageSnapshot
 
 if TYPE_CHECKING:
-    from playwright.async_api import (
+    from playwright.async_api import (  # type: ignore[import-not-found]
         Browser,
         BrowserContext,
         Page,
@@ -98,7 +98,9 @@ class NVBrowserSession:
 
     # Moved original logic to helper
     async def _ensure_browser_inner(self) -> None:
-        from playwright.async_api import async_playwright
+        from playwright.async_api import (
+            async_playwright,  # type: ignore[import-not-found]
+        )
 
         if self._page is not None:
             return

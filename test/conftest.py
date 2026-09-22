@@ -16,7 +16,7 @@ from typing import List
 import pytest
 from _pytest.config import Config
 from _pytest.nodes import Item
-from dotenv import load_dotenv
+from dotenv import load_dotenv  # type: ignore[import-not-found]
 
 load_dotenv()
 

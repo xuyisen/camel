@@ -15,9 +15,10 @@ import asyncio
 import base64
 import logging
 from pathlib import Path
+from typing import cast
 
-import streamlit as st
-from dotenv import load_dotenv
+import streamlit as st  # type: ignore[import-not-found]
+from dotenv import load_dotenv  # type: ignore[import-not-found]
 
 from camel.agents import ChatAgent
 from camel.logger import set_log_level
@@ -103,7 +104,7 @@ if user_input := st.chat_input("Ask a question about the repo…"):
                 model_type=ModelType.GPT_4O,
                 model_config_dict={"temperature": 0},
             ),
-            tools=tools,
+            tools=cast(list[FunctionTool | Callable], tools),
         )
         prompt = f"{question}\nRepository: {st.session_state['repo_url']}"
         response = await agent.astep(prompt)
