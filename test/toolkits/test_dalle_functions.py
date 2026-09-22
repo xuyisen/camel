@@ -52,9 +52,9 @@ def test_base64_to_image_valid(dalle_toolkit):
 
     image = dalle_toolkit.base64_to_image(valid_base64_string)
 
-    assert isinstance(
-        image, Image.Image
-    ), "The function should return a PIL Image object"
+    assert isinstance(image, Image.Image), (
+        "The function should return a PIL Image object"
+    )
 
 
 def test_base64_to_image_invalid(dalle_toolkit):
@@ -63,9 +63,9 @@ def test_base64_to_image_invalid(dalle_toolkit):
     image = dalle_toolkit.base64_to_image(invalid_base64_string)
 
     # Check response is None
-    assert (
-        image is None
-    ), "The function should return None for an invalid base64 string"
+    assert image is None, (
+        "The function should return None for an invalid base64 string"
+    )
 
 
 def test_image_path_to_base64(test_image_path, dalle_toolkit):
@@ -78,9 +78,9 @@ def test_image_path_to_base64(test_image_path, dalle_toolkit):
     with open(test_image_path, 'rb') as f:
         original_binary_data = f.read()
 
-    assert (
-        decoded_binary_data == original_binary_data
-    ), "The Base64 encoded string does not match the original image content."
+    assert decoded_binary_data == original_binary_data, (
+        "The Base64 encoded string does not match the original image content."
+    )
 
 
 def test_image_to_base64_with_invalid_input(dalle_toolkit):

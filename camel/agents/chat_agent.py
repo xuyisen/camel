@@ -111,13 +111,11 @@ else:
 
 
 SIMPLE_FORMAT_PROMPT = TextPrompt(
-    textwrap.dedent(
-        """\
+    textwrap.dedent("""\
         Please format the following content:
         
         {content}
-        """
-    )
+        """)
 )
 
 
@@ -173,7 +171,7 @@ class ChatAgent(BaseAgent):
         stop_event (Optional[threading.Event], optional): Event to signal
             termination of the agent's operation. When set, the agent will
             terminate its execution. (default: :obj:`None`)
-        mask_tool_output (Optional[bool]): Whether to return a sanitized 
+        mask_tool_output (Optional[bool]): Whether to return a sanitized
             placeholder instead of the raw tool output. (default: :obj:`False`)
     """
 
@@ -725,7 +723,7 @@ class ChatAgent(BaseAgent):
 
         for record_dict in all_records:
             # Validate the record dictionary before conversion
-            required_keys = ['message', 'role_at_backend', 'agent_id']
+            required_keys = ["message", "role_at_backend", "agent_id"]
             if not all(key in record_dict for key in required_keys):
                 logger.warning(
                     f"Skipping invalid record: missing required "
@@ -735,8 +733,8 @@ class ChatAgent(BaseAgent):
 
             # Validate message structure in the record
             if (
-                not isinstance(record_dict['message'], dict)
-                or '__class__' not in record_dict['message']
+                not isinstance(record_dict["message"], dict)
+                or "__class__" not in record_dict["message"]
             ):
                 logger.warning(
                     f"Skipping invalid record: malformed message "
@@ -884,7 +882,7 @@ class ChatAgent(BaseAgent):
 
             # Create a prompt based on the schema
             format_instruction = (
-                "\n\nPlease respond in the following JSON format:\n" "{\n"
+                "\n\nPlease respond in the following JSON format:\n{\n"
             )
 
             properties = schema.get("properties", {})
@@ -906,7 +904,7 @@ class ChatAgent(BaseAgent):
                     format_instruction += f'    "{field_name}": "string value"'
 
                 if description:
-                    format_instruction += f'  // {description}'
+                    format_instruction += f"  // {description}"
 
                 # Add comma if not the last item
                 if field_name != list(properties.keys())[-1]:
@@ -1007,7 +1005,7 @@ class ChatAgent(BaseAgent):
                         pass
 
                     # Try to extract JSON from text
-                    json_pattern = r'\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}'
+                    json_pattern = r"\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}"
                     json_matches = re.findall(json_pattern, content, re.DOTALL)
 
                     for json_str in json_matches:
@@ -1556,23 +1554,23 @@ class ChatAgent(BaseAgent):
             if isinstance(msg, dict):
                 sanitized_msg = msg.copy()
                 # Check if content is a list (multimodal content with images)
-                if isinstance(sanitized_msg.get('content'), list):
+                if isinstance(sanitized_msg.get("content"), list):
                     content_list = []
-                    for item in sanitized_msg['content']:
+                    for item in sanitized_msg["content"]:
                         if (
                             isinstance(item, dict)
-                            and item.get('type') == 'image_url'
+                            and item.get("type") == "image_url"
                         ):
                             # Handle image URL
-                            image_url = item.get('image_url', {}).get(
-                                'url', ''
+                            image_url = item.get("image_url", {}).get(
+                                "url", ""
                             )
                             if image_url and image_url.startswith(
-                                'data:image'
+                                "data:image"
                             ):
                                 # Extract image data and format
                                 match = re.match(
-                                    r'data:image/([^;]+);base64,(.+)',
+                                    r"data:image/([^;]+);base64,(.+)",
                                     image_url,
                                 )
                                 if match:
@@ -1598,7 +1596,7 @@ class ChatAgent(BaseAgent):
 
                                         # Only save if file doesn't exist
                                         if not os.path.exists(img_path):
-                                            with open(img_path, 'wb') as f:
+                                            with open(img_path, "wb") as f:
                                                 f.write(
                                                     base64.b64decode(
                                                         base64_data
@@ -1611,12 +1609,12 @@ class ChatAgent(BaseAgent):
 
                                         content_list.append(
                                             {
-                                                'type': 'image_url',
-                                                'image_url': {
-                                                    'url': f'{file_url}',
-                                                    'detail': item.get(
-                                                        'image_url', {}
-                                                    ).get('detail', 'auto'),
+                                                "type": "image_url",
+                                                "image_url": {
+                                                    "url": f"{file_url}",
+                                                    "detail": item.get(
+                                                        "image_url", {}
+                                                    ).get("detail", "auto"),
                                                 },
                                             }
                                         )
@@ -1625,15 +1623,15 @@ class ChatAgent(BaseAgent):
                                         # message
                                         content_list.append(
                                             {
-                                                'type': 'image_url',
-                                                'image_url': {
-                                                    'url': '[base64 '
-                                                    + 'image - error saving: '
+                                                "type": "image_url",
+                                                "image_url": {
+                                                    "url": "[base64 "
+                                                    + "image - error saving: "
                                                     + str(e)
-                                                    + ']',
-                                                    'detail': item.get(
-                                                        'image_url', {}
-                                                    ).get('detail', 'auto'),
+                                                    + "]",
+                                                    "detail": item.get(
+                                                        "image_url", {}
+                                                    ).get("detail", "auto"),
                                                 },
                                             }
                                         )
@@ -1642,13 +1640,13 @@ class ChatAgent(BaseAgent):
                                     # message
                                     content_list.append(
                                         {
-                                            'type': 'image_url',
-                                            'image_url': {
-                                                'url': '[base64 '
-                                                + 'image - invalid format]',
-                                                'detail': item.get(
-                                                    'image_url', {}
-                                                ).get('detail', 'auto'),
+                                            "type": "image_url",
+                                            "image_url": {
+                                                "url": "[base64 "
+                                                + "image - invalid format]",
+                                                "detail": item.get(
+                                                    "image_url", {}
+                                                ).get("detail", "auto"),
                                             },
                                         }
                                     )
@@ -1656,7 +1654,7 @@ class ChatAgent(BaseAgent):
                                 content_list.append(item)
                         else:
                             content_list.append(item)
-                    sanitized_msg['content'] = content_list
+                    sanitized_msg["content"] = content_list
                 sanitized_messages.append(sanitized_msg)
             else:
                 sanitized_messages.append(msg)
@@ -1966,8 +1964,10 @@ class ChatAgent(BaseAgent):
             raw_result = tool(**args)
             if self.mask_tool_output:
                 self._secure_result_store[tool_call_id] = raw_result
-                result= "[The tool has been executed successfully, but the output" \
-                        " from the tool is masked. You can move forward]"
+                result = (
+                    "[The tool has been executed successfully, but the output"
+                    " from the tool is masked. You can move forward]"
+                )
                 mask_flag = True
             else:
                 result = raw_result
@@ -1979,7 +1979,9 @@ class ChatAgent(BaseAgent):
             mask_flag = False
             logging.warning(error_msg)
 
-        return self._record_tool_calling(func_name, args, result, tool_call_id, mask_output=mask_flag)
+        return self._record_tool_calling(
+            func_name, args, result, tool_call_id, mask_output=mask_flag
+        )
 
     async def _aexecute_tool(
         self,
@@ -1993,15 +1995,15 @@ class ChatAgent(BaseAgent):
 
         try:
             # Try different invocation paths in order of preference
-            if hasattr(tool, 'func') and hasattr(tool.func, 'async_call'):
+            if hasattr(tool, "func") and hasattr(tool.func, "async_call"):
                 # Case: FunctionTool wrapping an MCP tool
                 result = await tool.func.async_call(**args)
 
-            elif hasattr(tool, 'async_call') and callable(tool.async_call):
+            elif hasattr(tool, "async_call") and callable(tool.async_call):
                 # Case: tool itself has async_call
                 result = await tool.async_call(**args)
 
-            elif hasattr(tool, 'func') and asyncio.iscoroutinefunction(
+            elif hasattr(tool, "func") and asyncio.iscoroutinefunction(
                 tool.func
             ):
                 # Case: tool wraps a direct async function
@@ -2039,12 +2041,13 @@ class ChatAgent(BaseAgent):
             args (Dict[str, Any]): The arguments passed to the tool.
             result (Any): The result returned by the tool execution.
             tool_call_id (str): A unique identifier for the tool call.
-            mask_output (bool, optional): Whether to return a sanitized placeholder instead 
-                of the raw tool output.
+            mask_output (bool, optional): Whether to return a sanitized
+                placeholder instead of the raw tool output.
                 (default: :obj:`False`)
 
         Returns:
-            ToolCallingRecord: A struct containing information about this tool call.
+            ToolCallingRecord: A struct containing information about
+                this tool call.
         """
         assist_msg = FunctionCallingMessage(
             role_name=self.role_name,

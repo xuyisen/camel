@@ -201,28 +201,28 @@ def test_babyagi_playing_step(model, step_call_count=3):
         # Call assistant for multiple times to make test units more robust
         assistant_response = babyagi_playing.step()
 
-        assert isinstance(
-            assistant_response.msgs, list
-        ), f"Error in calling round {i+1}"
-        assert (
-            len(assistant_response.msgs) == 1
-        ), f"Error in calling round {i+1}"
-        assert isinstance(
-            assistant_response.msgs[0], BaseMessage
-        ), f"Error in calling round {i+1}"
-        assert isinstance(
-            assistant_response.terminated, bool
-        ), f"Error in calling round {i+1}"
-        assert (
-            assistant_response.terminated is False
-        ), f"Error in calling round {i+1}"
-        assert isinstance(
-            assistant_response.info, dict
-        ), f"Error in calling round {i+1}"
+        assert isinstance(assistant_response.msgs, list), (
+            f"Error in calling round {i + 1}"
+        )
+        assert len(assistant_response.msgs) == 1, (
+            f"Error in calling round {i + 1}"
+        )
+        assert isinstance(assistant_response.msgs[0], BaseMessage), (
+            f"Error in calling round {i + 1}"
+        )
+        assert isinstance(assistant_response.terminated, bool), (
+            f"Error in calling round {i + 1}"
+        )
+        assert assistant_response.terminated is False, (
+            f"Error in calling round {i + 1}"
+        )
+        assert isinstance(assistant_response.info, dict), (
+            f"Error in calling round {i + 1}"
+        )
 
-        assert (
-            len(babyagi_playing.subtasks) > 0
-        ), f"Error in calling round {i+1}"
-        assert (
-            len(babyagi_playing.solved_subtasks) == i + 1
-        ), f"Error in calling round {i+1}"
+        assert len(babyagi_playing.subtasks) > 0, (
+            f"Error in calling round {i + 1}"
+        )
+        assert len(babyagi_playing.solved_subtasks) == i + 1, (
+            f"Error in calling round {i + 1}"
+        )

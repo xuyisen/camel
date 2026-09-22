@@ -43,9 +43,9 @@ def test_hugging_face_tool_agent_step(step_call_count=3):
                 f"it is a known issue of Huggingface ({ex!s})"
             )
             return
-        assert isinstance(
-            result, PngImageFile
-        ), f"Error in calling round {i+1}"
+        assert isinstance(result, PngImageFile), (
+            f"Error in calling round {i + 1}"
+        )
 
 
 @pytest.mark.skip(reason="Wait huggingface to update openaiv1")

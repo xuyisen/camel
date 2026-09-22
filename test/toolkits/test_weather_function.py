@@ -52,12 +52,12 @@ def test_weather(api_key, weather_toolkit):
         match = pattern.search(report)
         temp = float(match.group(1)) if match else None
         # Test temperature
-        assert (
-            temp is not None
-        ), "Temperature information is missing from the report"
-        assert (
-            temp_min <= temp <= temp_max
-        ), f"Temperature {temp} not in range for {temp_units}"
+        assert temp is not None, (
+            "Temperature information is missing from the report"
+        )
+        assert temp_min <= temp <= temp_max, (
+            f"Temperature {temp} not in range for {temp_units}"
+        )
 
     # Test wind speed in Jeddah, Saudi Arabia.
     city = "Jeddah"
@@ -76,12 +76,12 @@ def test_weather(api_key, weather_toolkit):
         match = pattern.search(report)
         wind_speed = float(match.group(1)) if match else None
         # Test wind speed
-        assert (
-            wind_speed is not None
-        ), "Wind speed information is missing from the report"
-        assert (
-            wind_min <= wind_speed <= wind_max
-        ), f"Wind speed {wind_speed} not in range for {wind_units}"
+        assert wind_speed is not None, (
+            "Wind speed information is missing from the report"
+        )
+        assert wind_min <= wind_speed <= wind_max, (
+            f"Wind speed {wind_speed} not in range for {wind_units}"
+        )
 
     # Test visibility distance in Harbin, China.
     city = "Harbin, China"
@@ -98,12 +98,12 @@ def test_weather(api_key, weather_toolkit):
         match = pattern.search(report)
         visibility = float(match.group(1)) if match else None
         # Test visibility
-        assert (
-            visibility is not None
-        ), "Visibility information is missing from the report"
-        assert (
-            visibility_min <= visibility <= visibility_max
-        ), f"Visibility {visibility} not in range for {visibility_units}"
+        assert visibility is not None, (
+            "Visibility information is missing from the report"
+        )
+        assert visibility_min <= visibility <= visibility_max, (
+            f"Visibility {visibility} not in range for {visibility_units}"
+        )
 
     # Test sunrise and sunset time in London,GB.
     city = "London,GB"
@@ -152,6 +152,6 @@ def test_weather(api_key, weather_toolkit):
             sunrise_time = datetime.strptime(sunrise_str, sunrise_format)
             sunset_time = datetime.strptime(sunset_str, sunrise_format)
         # Check that sunrise occurs before sunset
-        assert (
-            sunrise_time < sunset_time
-        ), "Sunrise time is not before sunset time in the report."
+        assert sunrise_time < sunset_time, (
+            "Sunrise time is not before sunset time in the report."
+        )
