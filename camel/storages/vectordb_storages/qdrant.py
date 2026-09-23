@@ -251,7 +251,7 @@ class QdrantStorage(BaseVectorStorage):
             else None,
             "vector_count": collection_info.points_count,
             "status": collection_info.status,
-            "vectors_count": collection_info.vectors_count,
+            "vectors_count": getattr(collection_info, 'vectors_count', None),
             "config": collection_info.config,
         }
 

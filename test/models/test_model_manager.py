@@ -12,10 +12,10 @@
 # limitations under the License.
 # ========= Copyright 2023-2024 @ CAMEL-AI.org. All Rights Reserved. =========
 
-from typing import TYPE_CHECKING, List
+from typing import TYPE_CHECKING
+from unittest.mock import Mock
 
 import pytest
-from mock import Mock
 from openai.types.chat.chat_completion_system_message_param import (
     ChatCompletionSystemMessageParam,
 )
@@ -49,14 +49,14 @@ def test_model_manager(
     )
 
     if TYPE_CHECKING:
-        assert type(models) is List[BaseModelBackend]
-    messages: List = []
+        assert type(models) is list[BaseModelBackend]
+    messages: list = []
     for _ in range(calls_count):
         msg = "message"
         if TYPE_CHECKING:
             assert type(msg) is ChatCompletionSystemMessageParam
         messages.append(msg)
-    model_manager = ModelManager(models, scheduling_strategy=strategy)
+    model_manager = ModelManager(models, scheduling_strategy=strategy)  # type: ignore[arg-type]
 
     assert isinstance(model_manager.models, list)
     assert len(model_manager.models) == models_number
