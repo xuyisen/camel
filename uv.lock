@@ -1,5 +1,5 @@
 version = 1
-revision = 2
+revision = 3
 requires-python = ">=3.10, <3.13"
 resolution-markers = [
     "python_full_version >= '3.12'",
@@ -1061,8 +1061,8 @@ requires-dist = [
     { name = "dappier", marker = "extra == 'web-tools'", specifier = ">=0.3.3,<0.4" },
     { name = "datacommons", marker = "extra == 'all'", specifier = ">=1.4.3,<2" },
     { name = "datacommons", marker = "extra == 'data-tools'", specifier = ">=1.4.3,<2" },
-    { name = "datacommons-pandas", marker = "extra == 'all'", specifier = ">=0.0.3,<0.0.4" },
-    { name = "datacommons-pandas", marker = "extra == 'data-tools'", specifier = ">=0.0.3,<0.0.4" },
+    { name = "datacommons-pandas", marker = "extra == 'all'", specifier = ">=0.0.3,<1" },
+    { name = "datacommons-pandas", marker = "extra == 'data-tools'", specifier = ">=0.0.3,<1" },
     { name = "datasets", marker = "extra == 'all'", specifier = ">=3,<4" },
     { name = "datasets", marker = "extra == 'huggingface'", specifier = ">=3,<4" },
     { name = "datasets", marker = "extra == 'owl'", specifier = ">=3,<4" },
@@ -1101,8 +1101,8 @@ requires-dist = [
     { name = "ffmpeg-python", marker = "extra == 'owl'", specifier = ">=0.2.0,<0.3" },
     { name = "firecrawl-py", marker = "extra == 'all'", specifier = ">=1.0.0,<2" },
     { name = "firecrawl-py", marker = "extra == 'web-tools'", specifier = ">=1.0.0,<2" },
-    { name = "fish-audio-sdk", marker = "extra == 'all'", specifier = ">=2024.12.5,<2025" },
-    { name = "fish-audio-sdk", marker = "extra == 'model-platforms'", specifier = ">=2024.12.5,<2025" },
+    { name = "fish-audio-sdk", marker = "extra == 'all'", specifier = ">=1.0.0,<2" },
+    { name = "fish-audio-sdk", marker = "extra == 'model-platforms'", specifier = ">=1.0.0,<2" },
     { name = "flask", marker = "extra == 'all'", specifier = ">=2.0" },
     { name = "flask", marker = "extra == 'dev'", specifier = ">=2.0" },
     { name = "google-api-python-client", marker = "extra == 'all'", specifier = "==2.166.0" },
@@ -2292,7 +2292,6 @@ dependencies = [
     { name = "numpy" },
     { name = "packaging" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/e7/9a/e33fc563f007924dd4ec3c5101fe5320298d6c13c158a24a9ed849058569/faiss_cpu-1.11.0.tar.gz", hash = "sha256:44877b896a2b30a61e35ea4970d008e8822545cb340eca4eff223ac7f40a1db9", size = 70218, upload-time = "2025-04-28T07:48:30.459Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/ed/e5/7490368ec421e44efd60a21aa88d244653c674d8d6ee6bc455d8ee3d02ed/faiss_cpu-1.11.0-cp310-cp310-macosx_14_0_arm64.whl", hash = "sha256:1995119152928c68096b0c1e5816e3ee5b1eebcf615b80370874523be009d0f6", size = 3307996, upload-time = "2025-04-28T07:47:29.126Z" },
     { url = "https://files.pythonhosted.org/packages/dd/ac/a94fbbbf4f38c2ad11862af92c071ff346630ebf33f3d36fe75c3817c2f0/faiss_cpu-1.11.0-cp310-cp310-macosx_14_0_x86_64.whl", hash = "sha256:788d7bf24293fdecc1b93f1414ca5cc62ebd5f2fecfcbb1d77f0e0530621c95d", size = 7886309, upload-time = "2025-04-28T07:47:31.668Z" },
@@ -2469,17 +2468,18 @@ wheels = [
 
 [[package]]
 name = "fish-audio-sdk"
-version = "2024.12.5"
+version = "1.3.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "httpx" },
     { name = "httpx-ws" },
     { name = "ormsgpack" },
     { name = "pydantic" },
+    { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a6/83/da3961fc2d90a62c27165bb3778517ccf5df1c140486f5685363a09afe29/fish_audio_sdk-2024.12.5.tar.gz", hash = "sha256:d7d2b5be0da323ca9c7b8f0d5ce3450f190a112af985c3283cb7ce330fd51e70", size = 27055, upload-time = "2024-12-05T08:56:03.736Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/42/cb/7eef0fdada0274fa5fef617601aaf7a5e6d5dc122112fcd3740bf0256774/fish_audio_sdk-1.3.0.tar.gz", hash = "sha256:148817a42475dda780748ce9c8f8f2722cd7947e7c7bd9b181152ce3b55e734b", size = 1052190, upload-time = "2026-03-10T05:40:15.021Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b6/6d/b3f92e7a166ebb2033c41b45f5b5fdbc4282e680492eff38f72180bc0510/fish_audio_sdk-2024.12.5-py3-none-any.whl", hash = "sha256:a4ce81c6609c239d5518cc1d78c7a0699da50797e0af4d6b3758a8fb5c12384e", size = 7934, upload-time = "2024-12-05T08:56:01.317Z" },
+    { url = "https://files.pythonhosted.org/packages/4e/78/d7e4b4f4d14381ae0c756281c447df68e43b0a8637970720befcddd4665d/fish_audio_sdk-1.3.0-py3-none-any.whl", hash = "sha256:51db1915de3707b5424e5dbd4719737e752ec1dd97c75af5c4bb75d2a3cb81a8", size = 41619, upload-time = "2026-03-10T05:40:13.14Z" },
 ]
 
 [[package]]
@@ -8031,11 +8031,11 @@ wheels = [
 
 [[package]]
 name = "typing-extensions"
-version = "4.14.1"
+version = "4.16.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/98/5a/da40306b885cc8c09109dc2e1abd358d5684b1425678151cdaed4731c822/typing_extensions-4.14.1.tar.gz", hash = "sha256:38b39f4aeeab64884ce9f74c94263ef78f3c22467c8724005483154c26648d36", size = 107673, upload-time = "2025-07-04T13:28:34.16Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/f6/cc/6253133b5bb138fc3306cebfbda2c520f545d36b5be2c7255cc528bb45d6/typing_extensions-4.16.0.tar.gz", hash = "sha256:dc983d19a509c94dba722ee6abd33940f7c05a89e243c47e907eb4db6f1a43e5", size = 113555, upload-time = "2026-07-02T08:40:05.92Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b5/00/d631e67a838026495268c2f6884f3711a15a9a2a96cd244fdaea53b823fb/typing_extensions-4.14.1-py3-none-any.whl", hash = "sha256:d1e1e3b58374dc93031d6eda2420a48ea44a36c2b4766a4fdeb3710755731d76", size = 43906, upload-time = "2025-07-04T13:28:32.743Z" },
+    { url = "https://files.pythonhosted.org/packages/49/d3/b8441a820a491ddfc024b0b0cf0393375b75ea13866d9c66727e54c2fc80/typing_extensions-4.16.0-py3-none-any.whl", hash = "sha256:481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8", size = 45571, upload-time = "2026-07-02T08:40:04.659Z" },
 ]
 
 [[package]]
