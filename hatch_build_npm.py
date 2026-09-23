@@ -24,7 +24,6 @@ import json
 import re
 import subprocess
 from pathlib import Path
-from typing import Optional, Tuple
 
 from hatchling.builders.hooks.plugin.interface import BuildHookInterface
 
@@ -55,7 +54,7 @@ class NpmBuildHook(BuildHookInterface):
             base_dir / "camel" / "toolkits" / "hybrid_browser_toolkit" / "ts"
         )
 
-    def _parse_version(self, version_str: str) -> Tuple[int, int, int]:
+    def _parse_version(self, version_str: str) -> tuple[int, int, int]:
         """Parse version string into major, minor, patch numbers."""
         version_str = version_str.strip().lstrip('v')
         match = re.match(r'(\d+)\.(\d+)\.(\d+)', version_str)
@@ -78,7 +77,7 @@ class NpmBuildHook(BuildHookInterface):
             )
         return True
 
-    def _get_package_requirements(self, ts_dir: Path) -> Optional[dict]:
+    def _get_package_requirements(self, ts_dir: Path) -> dict | None:
         """Get Node.js/npm version requirements
         from package.json or package-lock.json."""
         package_json = ts_dir / "package.json"
@@ -98,14 +97,14 @@ class NpmBuildHook(BuildHookInterface):
                         if not pkg_name and 'engines' in pkg_data:
                             return pkg_data['engines']
 
-        except (json.JSONDecodeError, IOError) as e:
+        except (OSError, json.JSONDecodeError) as e:
             print(f"Warning: Could not read package requirements: {e}")
 
         return None
 
     def _check_node_npm_versions(
         self, ts_dir: Path
-    ) -> Tuple[Optional[str], Optional[str], bool]:
+    ) -> tuple[str | None, str | None, bool]:
         """Check Node.js and npm versions against requirements."""
         node_version = None
         npm_version = None
